@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoviesApp</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Nav bar -->
+    <nav>
+        <div class="logo-container">
+            <img src="moviedb_logo.svg">
+        </div>
+        <div class="tab-item-container">
+            <ul class="nav-bar">
+                <li class="tab-item active" name="HOME">HOME</li>
+                <li class="tab-item" name="LIKED">LIKED</li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <!-- sort selection -->
+        <div class="select-container">
+            <select class="filter-select">
+                <option value="popular">Popular</option>
+                <option value="now_playing">Now Playing</option>
+                <option value="top_rated">Top Rated</option>
+                <option value="upcoming">Upcoming</option>
+            </select>
+        </div>
+        <!-- pagination bar -->
+        <div class="pagination-container">
+            <button id="prevButton" class="btn">prev</button>
+            <p id="currentPage">1 / 47461</p>
+            <button id="nextButton" class="btn">next</button>
+        </div>
+        <!-- list of movies -->
+        <div class="tab-view tab-view-active">
+            <div class="list-container" id="movieList">
+                
+            </div>
+        </div>
+        <div class="tab-view" id="likedContainer">
+            <div class="list-container" id="liedList">
+                
+            </div>
+        </div>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>

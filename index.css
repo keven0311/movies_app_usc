@@ -1,0 +1,117 @@
+body{
+    padding: 3rem;
+    max-width: 1678px;
+    font-family: "Roboto", sans-serif;
+}
+
+
+/* nav bar part */
+
+nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo-container{
+    width: 100px;
+    height: auto;
+}
+
+.tab-item-container{
+    flex: 1;
+}
+
+.nav-bar{
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-bar li{
+    margin-left: 3rem;
+    list-style: none;
+    font-size: 1.5rem;
+}
+
+.active::after{
+    content: "";
+    width: 100%;
+    height: 5px;
+    display: block;
+    background-color: #01b4e4;
+}
+
+/* pagination part */
+.pagination-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 33px;
+    width: 100%;
+    margin: 1rem auto;
+}
+
+.btn{
+    padding: 8px;
+    background-color: #01b4e4;
+    border: 1px solid white;
+    color: white;
+}
+
+/* movie list part */
+.tab-view-active{
+    display: block;
+}
+
+.list-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 3rem;
+}
+
+.movie-card{
+    text-align: center;
+    box-shadow: 0 1px 5px 1px rgba(0,0,0,0.1);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.movie-card-img img{
+    width: 100%;
+}
+
+.rating{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.like-div{
+    align-self: flex-end;
+}
+
+
+/* rating icon */
+.ion-md-star:before{
+    content: "★";
+    color: #f5c518;
+    margin-right: 0.5rem;
+    cursor:default;
+}
+
+/* like icon */
+.ion-md-heart:before{
+    content: "♥";
+    color:red;
+}
+
+.ion-md-heart-empty:before{
+    content: "♡";
+}
+
+.movie-card .icon{
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
