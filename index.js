@@ -12,8 +12,11 @@ const state = {
     toltalPages:0,
     currentPage:1,
     currentFilter:'popular',
-    currentTab: "home"
+    currentTab: "HOME"
 }
+
+const BASE_URL = "https://api.themoviedb.org/3"
+const BASE_IMG_SRC = "https://image.tmdb.org/t/p/w500"
 
 const list_container = document.querySelector("#movieList")
 function createMovieCard(title,img,rating,id){
@@ -29,7 +32,7 @@ function createMovieCard(title,img,rating,id){
     cardImgDiv.className = 'movie-card-img';
     
     const image = document.createElement('img');
-    image.src = `https://image.tmdb.org/t/p/w500${img}`;
+    image.src = `${BASE_IMG_SRC}${img}`;
     cardImgDiv.append(image);
     
     const titleH4 = document.createElement("h4");
@@ -54,6 +57,16 @@ function createMovieCard(title,img,rating,id){
     likeIcon.className = `like-icon icon ${isLiked ? 'ion-md-heart' : 'ion-md-heart-empty'}`
     likeDiv.append(likeIcon)
     ratingDiv.append(likeDiv)
+
+    likeDiv.addEventListener("click",() => {
+        const movie = { title,img:`${BASE_IMG_SRC}${img}`,rating,id }
+        if(!isLiked){
+            state.likeList.push(movie)
+        }else{
+            state.likeList = state.likeList.filter(movie => movie.id !== id)
+        }
+        renderMovies()
+    })
     
     card.append(cardImgDiv);
     card.append(titleH4);
@@ -64,25 +77,80 @@ function createMovieCard(title,img,rating,id){
 function renderMovies(){
     list_container.innerHTML = ''
 
-    if(state.currentTab === 'home'){
+    if(state.currentTab === 'HOME'){
         state.movieList.map(movie => {
             const card = createMovieCard(movie.title,movie.poster_path,movie.vote_average,movie.id)
             list_container.append(card)
         })
-    }else if(state.currentTab === 'liked'){
+    }else if(state.currentTab === 'LIKED'){
         state.likeList.map(movie => {
-            const card = createMovieCard(movie.title,movie.poster_path,movie.vote_average,movie.id)
+            const card = createMovieCard(movie.title,movie.img,movie.rating,movie.id)
             list_container.append(card)
         })
     }
 }
 
-fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',apiOptions)
-    .then(res => res.json())
-    .then(res => {
-        state.movieList = res.results;
-        console.log(state.movieList);
-        renderMovies();
-    })
-    .catch(err => console.error(err));
+// fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',apiOptions)
+//     .then(res => res.json())
+//     .then(res => {
+//         state.movieList = res.results;
+//         console.log(state.movieList);
+//         renderMovies();
+//     })
+//     .catch(err => console.error(err));
 
+function fetchData(category = "popular", page = 1){
+    const movieData = fetch(`${BASE_URL}/movie/${category}?language=en-US&page=${page}`,apiOptions)
+                        .then( res =>{
+                            if(res.ok){
+                                return res.json();
+                            }else{
+                                return [];
+                            }
+                        })
+    return movieData;
+}
+
+async function handleFilterChange(){
+    const filters = document.querySelector(".filter-select");
+    const selectedFilter = filters.value;
+    state.currentFilter = selectedFilter;
+    const data = await fetchData(selectedFilter);
+    state.movieList = data.results;
+    renderMovies();
+}
+
+function handleTabChange(e){
+    const clickedTab = e.target;
+    const tabName = clickedTab.getAttribute("name");
+    state.currentTab = tabName;
+    document.querySelectorAll(".tab-item").forEach( tab =>{
+        tab.classList.remove("active");
+    });
+    clickedTab.classList.add("active");
+    renderMovies();
+}
+
+function addEventListners(){
+    // filter eventListner:
+    const tabSelect = document.querySelector(".filter-select");
+    tabSelect.addEventListener("change", handleFilterChange);
+
+    // tab eventListner:
+    const tabs = document.querySelectorAll('.tab-item');
+    tabs.forEach(tab => {
+        tab.addEventListener("click", handleTabChange);
+    })
+
+}
+
+async function onload(){
+    const data = await fetchData("popular",1);
+    state.movieList = data.results;
+
+
+    renderMovies();
+    addEventListners();
+}
+
+onload();
