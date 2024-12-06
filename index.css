@@ -83,6 +83,16 @@ nav{
     box-sizing: border-box;
 }
 
+.movie-card-title{
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    cursor: pointer;
+}
+
+.movie-card-title:hover{
+    color: #90cea1;
+}
+
 .movie-card-img img{
     width: 100%;
 }
@@ -118,7 +128,7 @@ nav{
 }
 
 .movie-card .icon{
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
 }
 

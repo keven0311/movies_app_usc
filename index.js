@@ -121,6 +121,7 @@ async function handleFilterChange(){
     const data = await fetchData(selectedFilter);
     state.movieList = data.results;
     renderMovies();
+    addEventListners();
 }
 
 function handleTabChange(e){
